@@ -1,0 +1,25 @@
+{
+    "name": "convig",
+    "version": "1.0.0",
+    "description": "chained configuration from process.env",
+    "keywords": ["config", "configuration", "env", "environment"],
+    "main": "js/index.js",
+    "files": ["js", "src", "README.md", "LICENSE"],
+    "scripts": {
+        "prepublish": "./node_modules/.bin/coffee -o js -c src",
+        "pretest": "./node_modules/.bin/coffee -o js -c src",
+        "test": "./node_modules/.bin/mocha -R min js/test.js"
+    },
+    "devDependencies": {
+        "coffee-script": "^1.8.0",
+        "mocha": "^2.0.0",
+        "should": "^4.0.4"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/typeduck/convig.git"
+    },
+    "bugs": "https://github.com/typeduck/convig/issues",
+    "author": "Ruquay K Calloway",
+    "license": "MIT"
+}
