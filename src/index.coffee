@@ -82,7 +82,7 @@ class ConfigChain
   @chain.apply(@, args)
 
 # A Method that will return application ID based on args/pm2 process title
-rxPM2 = /^pm2\:\s*(.+?)(\.(js|coffee))?$/
+rxPM2 = /^pm2[^:]*\:\s*(.+?)(\.(js|coffee))?$/i
 rxScript = /([^/]+?)(\.(js|coffee))?$/
 @appId = (fallback = null) ->
   fallback ?= process.argv[1]

@@ -131,3 +131,9 @@ describe "convig", () ->
   # only testing for mocha, we can't really test for other things...
   it "should give me an appId", () ->
     convig.appId().should.equal("_mocha")
+  # yes, we can: just overwrite process.title
+  it "should recognize pm2 process titles", () ->
+    process.title = "pm2: foo-bar"
+    convig.appId().should.equal("foo-bar")
+    process.title = "PM2 v0.12.2: bar-baz"
+    convig.appId().should.equal("bar-baz")
