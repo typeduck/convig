@@ -58,7 +58,8 @@ describe "convig", () ->
 
   it "should be able to handle +Infinity/-Infinity defaults, values", () ->
     def = {a: Infinity, b: -Infinity, c: Infinity, d: 10, e: 10}
-    CONFIG = convig.chain({c: "+15", d: "+Infinity", e: "-Infinity"}, def)
+    first = {c: "+15", d: "+Infinity", e: "-Infinity"}
+    CONFIG = convig.chain(first, def).warn().warn()
     CONFIG.a.should.equal(Infinity)
     CONFIG.b.should.equal(-Infinity)
     CONFIG.c.should.equal(15)

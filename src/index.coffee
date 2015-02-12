@@ -16,6 +16,13 @@ class ConfigChain
     Object.defineProperty(@, "split", {
       set: (val) -> splitter = val if typeof val is "string"
     })
+    # Triggers the warnings for all default values
+    Object.defineProperty(@, "warn", {
+      get: () ->
+        return () =>
+          x = @[k] for k of LASTRESORT
+          return @
+    })
 
     # Evaluates the value found in the chain. Usually just the value itself, with
     # some casting based on the final value

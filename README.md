@@ -25,6 +25,16 @@ a *last resort* from the default object at the end -- which also declares the
 types. When the *last resort* value is used, a warning will be written on stderr
 (but only the first time, and only if the *last resort* value isn't *null*).
 
+**NOTE:** you can trigger warnings by calling the special function "warn", which
+  returns the configuration object:
+
+```javascript
+CONFIG = config.chain(process.env, {
+  foo: "foo"
+}).warn()
+```
+
+
 In the (contrived) example above, the *CONFIG* return value provides getters
 which behave as follows:
 - process.env will be tried first, then the second object literal, then the
