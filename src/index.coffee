@@ -23,8 +23,13 @@ class ConfigChain
       type = typeof val
       if type is "function"
         val = val.call(@)
+      # Integer is pimped out to deal with the infinite
       if finalType is "int"
-        val = parseInt(val, 10)
+        if val is "Infinity" or val is "+Infinity"
+          val = Infinity
+        else if val is "-Infinity"
+          val = -Infinity
+        val = parseInt(val, 10) if Math.abs(val) isnt Infinity
       if finalType is "float"
         val = parseFloat(val)
       # process.env casts true/false to STRINGS, e.g. "true"/"false"

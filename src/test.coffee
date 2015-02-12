@@ -56,6 +56,15 @@ describe "convig", () ->
     CONFIG.c.should.equal true
     CONFIG.d.should.equal true
 
+  it "should be able to handle +Infinity/-Infinity defaults, values", () ->
+    def = {a: Infinity, b: -Infinity, c: Infinity, d: 10, e: 10}
+    CONFIG = convig.chain({c: "+15", d: "+Infinity", e: "-Infinity"}, def)
+    CONFIG.a.should.equal(Infinity)
+    CONFIG.b.should.equal(-Infinity)
+    CONFIG.c.should.equal(15)
+    CONFIG.d.should.equal(Infinity)
+    CONFIG.e.should.equal(-Infinity)
+
   it "should be able to throw exceptions", (done) ->
     first = {}
     last = {a: () -> throw new Error("I am a thrower")}

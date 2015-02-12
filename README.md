@@ -13,6 +13,7 @@ CONFIG = convig.chain(process.env, {foo: "FOO", bool: "on", dne: 0}, {
   ,baz: function(){ throw new Error("baz may NOT fallback!"); }
   ,numInt: 42
   ,numFloat: Math.PI
+  ,infinite: Infinity
   ,bool: false
   ,noWarning: null
   ,csv: ["a", "b", "c"]
@@ -37,6 +38,10 @@ which behave as follows:
   - if *last resort* value is an array, and retrieved value is a string, it will
     be split by commas (or another separator - keep reading) into array of
     strings
+  - if *last resort* is an integer, strings "Infinity" and "-Infinity" cast as
+    expected (e.g. you get the javascript Infinity)
+  - if *last resort* is +/-Infinity, strings and literal Infinity-values work,
+    everything else will be cast to an integer
 - instead of literals, functions may be provided, in which case they will be
   called with *this* scoped to the CONFIG object.
 
@@ -49,6 +54,7 @@ CONFIG.baz;       // throws Error! do this to require e.g. process.env to be set
 CONFIG.bool;      // true (from "on" in object literal)
 CONFIG.numInt;    // 42
 CONFIG.numFloat;  // Math.PI
+CONFIG.infinite;  // Infinity
 CONFIG.dne;       // undefined
 CONFIG.noWarning; // null (will not output a warning)
 CONFIG.csv        // ["a", "b", "c"]
