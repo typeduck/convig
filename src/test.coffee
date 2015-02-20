@@ -147,3 +147,49 @@ describe "convig", () ->
     convig.appId().should.equal("foo-bar")
     process.title = "PM2 v0.12.2: bar-baz"
     convig.appId().should.equal("bar-baz")
+
+  # chains of itself
+  it "should properly handle long chains", () ->
+    conf0 = convig.chain({a: "A0"})
+    conf1 = convig.chain(conf0, {
+      a: "A1"
+      b: "B1"
+    })
+    conf1.a.should.equal("A0")
+    conf1.b.should.equal("B1")
+    conf2 = convig.chain(conf1, {
+      a: "A2"
+      b: "B2"
+      c: "C2"
+    })
+    conf2.a.should.equal("A0")
+    conf2.b.should.equal("B1")
+    conf2.c.should.equal("C2")
+    conf3 = convig.chain(conf2, {
+      a: "A3"
+      b: "B3"
+      c: "C3"
+      d: "D3"
+    })
+    conf3.a.should.equal("A0")
+    conf3.b.should.equal("B1")
+    conf3.c.should.equal("C2")
+    conf3.d.should.equal("D3")
+
+  # multiple function chains
+  it "should properly handle functions in chains", () ->
+    input = {a: "A0"}
+    conf1 = convig.chain(input, {
+      a: () -> throw new Error("A1")
+      b: () -> "B1"
+    })
+    conf1.a.should.equal("A0")
+    conf1.b.should.equal("B1")
+    conf2 = convig.chain(conf1, {
+      a: () -> throw new Error("A2")
+      b: () -> throw new Error("B2")
+      c: () -> "C2"
+    })
+    conf2.a.should.equal("A0")
+    conf2.b.should.equal("B1")
+    conf2.c.should.equal("C2")

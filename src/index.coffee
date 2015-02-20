@@ -6,10 +6,9 @@ class ConfigChain
     chain = []
     Object.defineProperty(@, "_chain", { get: () -> chain.slice() })
     while (elem = fromChain.pop())
+      chain.unshift(elem)
       if elem instanceof ConfigChain
         chain = elem._chain.concat(chain)
-      else
-        chain.unshift(elem)
     
     # allow the array splitter to be changed
     splitter = ","
