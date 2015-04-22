@@ -52,6 +52,8 @@ which behave as follows:
     expected (e.g. you get the javascript Infinity)
   - if *last resort* is +/-Infinity, strings and literal Infinity-values work,
     everything else will be cast to an integer
+  - if *last resort* is RegExp, values will be cast into RegExp objects. flags
+    are parsed when strings start & end with "/" (plus optional flags).
 - instead of literals, functions may be provided, in which case they will be
   called with *this* scoped to the CONFIG object.
 

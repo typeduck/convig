@@ -56,6 +56,23 @@ describe "convig", () ->
     CONFIG.c.should.equal true
     CONFIG.d.should.equal true
 
+  # RegExp casting
+  it "should cast RegExp properly", () ->
+    first = {rxGreen: "tree|bush", rxBlue: "/sky|eyes|jeans/i", rxRed: "/fire/"}
+    second = {rxGreen: /green/, rxBlue: /blue/, rxRed: /red/}
+    CONFIG = convig.chain(first, second)
+    CONFIG.rxGreen.test("green").should.be.false
+    CONFIG.rxGreen.test("tree").should.be.true
+    CONFIG.rxGreen.test("bush").should.be.true
+    CONFIG.rxBlue.test("blue").should.be.false
+    CONFIG.rxBlue.test("sKy").should.be.true
+    CONFIG.rxBlue.test("EYEs").should.be.true
+    CONFIG.rxBlue.test("Jeans").should.be.true
+    CONFIG.rxRed.test("red").should.be.false
+    CONFIG.rxRed.test("Fire").should.be.false
+    CONFIG.rxRed.test("fire").should.be.true
+    
+
   it "should be able to handle +Infinity/-Infinity defaults, values", () ->
     def = {a: Infinity, b: -Infinity, c: Infinity, d: 10, e: 10}
     first = {c: "+15", d: "+Infinity", e: "-Infinity"}

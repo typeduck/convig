@@ -47,6 +47,9 @@ class ConfigChain
       # split comma strings
       if finalType is "array" and type is "string"
         val = val.split(splitter)
+      # RegExp Handling
+      if finalType is "regexp"
+        val = createRegexp(val)
       return val
     
     # Warning text
@@ -73,6 +76,8 @@ class ConfigChain
     for prop, val of LASTRESORT
       if Array.isArray(val)
         type = "array"
+      else if val instanceof RegExp
+        type = "regexp"
       else if "number" is type = typeof val
         type = if Math.round(val) is val then "int" else "float"
 
@@ -81,6 +86,12 @@ class ConfigChain
         get: propFinder.bind(null, prop, type)
       })
 
+# RegExp-finding RegExp: string starts with slash, ends with slash/flags
+createRegexp = (s) ->
+  if mExp = /^\/(.*)\/([gimy]*)$/.exec(s)
+    return new RegExp(mExp[1], mExp[2])
+  else
+    return new RegExp(s)
 
 # Reads configuration from objects with cascading preference. The *LAST*
 # argument is considered the "last resort" and a warning on console.error is
