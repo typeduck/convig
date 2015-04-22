@@ -2,9 +2,12 @@
 # "lastResort" specification which will trigger warnings.
 class ConfigChain
   constructor: (fromChain, LASTRESORT) ->
+    if LASTRESORT instanceof ConfigChain
+      LASTRESORT = LASTRESORT._lastResort
     # Build up chain, unwinding other ConfigChains into single chain
     chain = []
     Object.defineProperty(@, "_chain", { get: () -> chain.slice() })
+    Object.defineProperty(@, "_lastResort", { get: () -> LASTRESORT })
     while (elem = fromChain.pop())
       chain.unshift(elem)
       if elem instanceof ConfigChain

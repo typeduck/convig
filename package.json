@@ -1,6 +1,6 @@
 {
     "name": "convig",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "chained configuration from process.env",
     "keywords": ["config", "configuration", "env", "environment"],
     "main": "js/index.js",

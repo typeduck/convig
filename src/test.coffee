@@ -193,3 +193,16 @@ describe "convig", () ->
     conf2.a.should.equal("A0")
     conf2.b.should.equal("B1")
     conf2.c.should.equal("C2")
+
+  # last resort as chain
+  it "should properly handle chain as last resort", () ->
+    conf0 = convig.chain({a: () -> "A0"})
+    conf1 = convig.chain(conf0, {
+      a: () -> throw new Error("a not defined")
+      b: () -> throw new Error("b not defined")
+    })
+    conf2 = convig.chain({b: "B0"}, conf0, conf1)
+    conf2.a.should.equal("A0")
+    conf2.b.should.equal("B0")
+    conf0.a.should.equal("A0")
+    conf1.a.should.equal("A0")
