@@ -1,7 +1,13 @@
-# Configuration via process.env with warnings
+# Configuration via process.env, with warnings
 
-Use a configuration that spits out warnings when values aren't set, but taken
-from a *last resort* declaration.
+Get configuration from `process.env` (or other objects), loading defaults from a
+*last resort* declaration.
+
+Retrieving the default value from the *last resort* object will trigger a
+warning when retrieved for the first time **and** one of the following is true:
+
+- `NODE_ENV=production` - in production, supply full configuration
+- `DEBUG=convig` - standard [debug](https://github.com/visionmedia/debug)
 
 ## Usage
 
@@ -95,17 +101,4 @@ CONFIG.split = ";" // use a semicolon when splitting arrays from here on out
 CONFIG.mylist      // ["click", "clack", "zoom"]
 CONFIG.split = "," // you can even set it back if you want to
 CONFIG.mylist      // ["click;clack;zoom"] - still an array, but no comma!
-```
-
-## App ID
-
-As a small helper, there is one more method which returns the name of the
-running script. It returns the basename (without extension) for JavaScript and
-CoffeeScript files, and works if the script is being managed by
-[PM2](https://github.com/Unitech/pm2) as well.
-
-```javascript
-CONFIG = convig.env({
-  appId: convig.appId()
-})
 ```
