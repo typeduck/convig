@@ -1,6 +1,6 @@
 {
   "name": "convig",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "chained configuration from process.env",
   "keywords": [
     "config",
@@ -18,10 +18,10 @@
     "test": "./node_modules/.bin/mocha -R min lib/test.js"
   },
   "dependencies": {
-    "debug": "3.0.0"
+    "debug": "3.1.0"
   },
   "devDependencies": {
-    "mocha": "3.5.0",
+    "mocha": "5.1.1",
     "should": "11.2.1"
   },
   "repository": {
